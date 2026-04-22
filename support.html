@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help & Support – Ecclesia Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C8A96E; --gold-light: #E0C898; --gold-dark: #9E7A42;
+      --bg: #0D0B09; --bg-card: #141210; --bg-surface: #1C1916;
+      --text: #F2EDE6; --text-muted: #9A8E7F; --text-faint: #5C5247;
+      --border: #2A2520; --border-gold: rgba(200,169,110,0.25); --mint: #3DCCAB;
+      --red: #E06060;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1.2rem 0; background: rgba(13,11,9,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo-mark { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .logo-icon { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; }
+    .logo-icon i { color: #0D0B09; font-size: 0.9rem; }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); font-weight: 700; }
+    .nav-links { display: flex; list-style: none; gap: 2rem; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta { padding: 0.55rem 1.3rem; background: var(--gold); color: #0D0B09; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+    .mobile-menu { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
+    .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 98; }
+
+    .page-header { padding: 140px 2rem 60px; background: var(--bg-card); border-bottom: 1px solid var(--border); text-align: center; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 50% 0%, rgba(200,169,110,0.05) 0%, transparent 70%); }
+    .page-header-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 2; }
+    .page-eyebrow { display: inline-block; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; font-weight: 600; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 0.8rem; }
+    .page-desc { color: var(--text-muted); font-size: 1rem; line-height: 1.7; }
+
+    .content { max-width: 800px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem;
+    }
+    .card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .card-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .card-icon i { color: var(--gold); font-size: 0.9rem; }
+    .card-icon.mint { background: rgba(61,204,171,0.1); border-color: rgba(61,204,171,0.25); }
+    .card-icon.mint i { color: var(--mint); }
+    .card-title { font-size: 1rem; font-weight: 600; }
+
+    /* QUICK ACTIONS */
+    .quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .quick-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      padding: 1.2rem; background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: 14px; text-decoration: none; color: var(--text-muted);
+      transition: all 0.25s; cursor: pointer; font-family: inherit;
+    }
+    .quick-btn:hover { border-color: var(--border-gold); color: var(--gold); background: rgba(200,169,110,0.06); }
+    .quick-btn i { font-size: 1.3rem; }
+    .quick-btn span { font-size: 0.8rem; font-weight: 600; text-align: center; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 0; cursor: pointer; user-select: none;
+      gap: 1rem;
+    }
+    .faq-q:hover .faq-q-text { color: var(--gold); }
+    .faq-q-text { font-size: 0.93rem; font-weight: 500; color: var(--text); transition: color 0.2s; }
+    .faq-chevron { color: var(--text-faint); font-size: 0.75rem; flex-shrink: 0; transition: transform 0.25s; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-item.open .faq-a { max-height: 200px; }
+    .faq-a-text { padding-bottom: 1rem; color: var(--text-muted); font-size: 0.88rem; line-height: 1.75; }
+
+    /* TIPS */
+    .tips-list { display: flex; flex-direction: column; gap: 1rem; }
+    .tip-item { display: flex; align-items: flex-start; gap: 0.9rem; padding: 1rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; }
+    .tip-icon { width: 34px; height: 34px; border-radius: 10px; background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tip-icon i { color: var(--gold); font-size: 0.85rem; }
+    .tip-content h4 { font-size: 0.87rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .tip-content p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* CONTACT LINKS */
+    .contact-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.2rem; background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: 14px; text-decoration: none; color: inherit;
+      transition: all 0.2s; margin-bottom: 0.8rem;
+    }
+    .contact-item:last-child { margin-bottom: 0; }
+    .contact-item:hover { border-color: var(--border-gold); }
+    .contact-left { display: flex; align-items: center; gap: 0.8rem; }
+    .c-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .c-icon i { color: var(--gold); font-size: 0.85rem; }
+    .c-text h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .c-text p { font-size: 0.78rem; color: var(--text-muted); }
+    .contact-item .arrow { color: var(--text-faint); font-size: 0.8rem; }
+
+    /* APP INFO */
+    .info-rows { display: flex; flex-direction: column; gap: 0; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: var(--text-muted); font-size: 0.87rem; }
+    .info-value { font-size: 0.87rem; font-weight: 600; color: var(--text); }
+
+    /* CTA CARD */
+    .cta-card {
+      background: linear-gradient(135deg, rgba(200,169,110,0.08) 0%, rgba(200,169,110,0.03) 100%);
+      border: 1px solid var(--border-gold); border-radius: 20px;
+      padding: 2.5rem; text-align: center; margin-bottom: 1.5rem;
+    }
+    .cta-card h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .cta-card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--gold); color: #0D0B09; padding: 0.8rem 1.8rem;
+      border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .cta-btn:hover { background: var(--gold-light); }
+
+    footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 2.5rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { color: var(--text-faint); font-size: 0.82rem; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); font-size: 0.82rem; text-decoration: none; }
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-card); flex-direction: column; padding: 6rem 2rem 2rem; z-index: 99; gap: 0; }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-bottom: 1px solid var(--border); }
+      .nav-links a { display: block; padding: 1rem 0; font-size: 1.1rem; }
+      .mobile-menu { display: block; z-index: 100; }
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo-mark">
+      <div class="logo-icon"><i class="fas fa-cross"></i></div>
+      <span class="logo-text">Ecclesia</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="legal.html">Legal Notice</a></li>
+      <li><a href="support.html" class="active">Support</a></li>
+    </ul>
+    <a href="mailto:ecclesia@proton.me" class="nav-cta">Get Early Access</a>
+    <button class="mobile-menu" id="mobileMenu"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <span class="page-eyebrow"><i class="fas fa-life-ring"></i> &nbsp;Support</span>
+    <h1 class="page-title">Help &amp; Support</h1>
+    <p class="page-desc">Find answers to common questions and get in touch with us directly.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- QUICK ACTIONS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon"><i class="fas fa-bolt"></i></div>
+      <div class="card-title">Quick Actions</div>
+    </div>
+    <div class="quick-grid">
+      <a href="mailto:ecclesia@proton.me" class="quick-btn">
+        <i class="fas fa-envelope"></i>
+        <span>Contact Support</span>
+      </a>
+      <a href="mailto:ecclesia@proton.me?subject=Bug Report – Ecclesia Companion v1.0.0" class="quick-btn">
+        <i class="fas fa-bug"></i>
+        <span>Report a Bug</span>
+      </a>
+      <a href="mailto:ecclesia@proton.me?subject=Feature Request – Ecclesia Companion" class="quick-btn">
+        <i class="fas fa-lightbulb"></i>
+        <span>Request a Feature</span>
+      </a>
+      <a href="mailto:ecclesia@proton.me?subject=Beta Tester – Ecclesia Companion" class="quick-btn">
+        <i class="fas fa-rocket"></i>
+        <span>Join Beta</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon"><i class="fas fa-question-circle"></i></div>
+      <div class="card-title">Frequently Asked Questions</div>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How do I create a new sermon note?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">Tap the "New Note" button on the Home screen. You can choose between <strong>Free Notes</strong> (open canvas) or <strong>Guided Capture</strong> (structured anchors for aha moments, prayers, questions, and action steps). Give your document a title and start writing.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Can I access my notes offline?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">Yes! Ecclesia Companion caches your notes locally on your device. You can read and work with previously loaded content offline. New content you create while offline will sync the next time you have an internet connection.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How do I add a prayer request?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">Navigate to the Prayer tab. Type your request in the input field at the top and tap the + button. You can also add a description, tags, and set a reminder notification. Tap the bell icon on any prayer to schedule it.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What is "Pray Mode"?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">Pray Mode is a focused, distraction-free prayer session. Tap the "Start Pray Mode" button in the Prayer tab. You'll be guided through each of your active prayer requests one by one — you can mark them as prayed, skip, or discard them.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How do weekly challenges work?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">In the Week tab, tap "New Challenge" and write one concrete commitment for the week. Each day you complete it, tap that day's circle to check it off. After the week, archive the challenge to see your history.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How do I delete my account and data?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">Go to your Profile → Settings → Delete Account. This will permanently delete all your data from our servers. This action cannot be undone. Alternatively, contact us at ecclesia@proton.me to request manual deletion.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Is my data secure and private?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">Yes. Your data is stored securely in Google Firebase with encryption in transit and at rest. We do not sell or share your personal data. There are no ads in the app. You can read our full Privacy Policy for all details.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How do I search my notes in the Library?</span>
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </div>
+        <div class="faq-a">
+          <p class="faq-a-text">From the Home screen, tap "Library". Use the search bar to search by title. Use the filter panel to narrow by tag, folder, or date range. Results update instantly as you type.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon mint"><i class="fas fa-lightbulb"></i></div>
+      <div class="card-title">Tips &amp; Tricks</div>
+    </div>
+    <div class="tips-list">
+      <div class="tip-item">
+        <div class="tip-icon"><i class="fas fa-anchor"></i></div>
+        <div class="tip-content">
+          <h4>Use Guided Capture anchors</h4>
+          <p>In Guided Mode, use the colored buttons (Aha, Prayer, Question, Application) to route each thought. This makes your summary screen much more useful after the service.</p>
+        </div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon"><i class="fas fa-tag"></i></div>
+        <div class="tip-content">
+          <h4>Tag your documents</h4>
+          <p>Use tags like "Sermon", "Youth", "Small Group" when creating notes. They make filtering in the Library much faster.</p>
+        </div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon"><i class="fas fa-bell"></i></div>
+        <div class="tip-content">
+          <h4>Set individual prayer reminders</h4>
+          <p>Go to Settings → Prayer Reminders and switch to "Per Prayer" mode. Then set custom times for each prayer request individually.</p>
+        </div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-icon"><i class="fas fa-sparkles"></i></div>
+        <div class="tip-content">
+          <h4>Save a One-Step commitment</h4>
+          <p>On the Summary screen after a session, save a "One Step" — one concrete action for the week. It appears on your home screen as a visual reminder throughout the week.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon"><i class="fas fa-envelope"></i></div>
+      <div class="card-title">Contact Us</div>
+    </div>
+    <a href="mailto:ecclesia@proton.me" class="contact-item">
+      <div class="contact-left">
+        <div class="c-icon"><i class="fas fa-envelope"></i></div>
+        <div class="c-text">
+          <h3>Email Us</h3>
+          <p>ecclesia@proton.me</p>
+        </div>
+      </div>
+      <i class="fas fa-external-link-alt arrow"></i>
+    </a>
+  </div>
+
+  <!-- APP INFO -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon"><i class="fas fa-info-circle"></i></div>
+      <div class="card-title">App Information</div>
+    </div>
+    <div class="info-rows">
+      <div class="info-row">
+        <span class="info-label">Version</span>
+        <span class="info-value">1.0.0</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Developer</span>
+        <span class="info-value">Tobias Weihing</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Platform</span>
+        <span class="info-value">Android</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Last Updated</span>
+        <span class="info-value">January 2026</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Contact</span>
+        <span class="info-value"><a href="mailto:ecclesia@proton.me" style="color:var(--gold);">ecclesia@proton.me</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="cta-card">
+    <h3>Still have questions?</h3>
+    <p>We're here to help. Send us an email and we'll get back to you as soon as possible.</p>
+    <a href="mailto:ecclesia@proton.me" class="cta-btn">
+      <i class="fas fa-envelope"></i> Contact Support
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2025 Tobias Weihing. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="legal.html">Legal Notice</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('mobileMenu');
+  const nav = document.getElementById('navLinks');
+  const overlay = document.getElementById('navOverlay');
+  function toggle() { nav.classList.toggle('active'); overlay.style.display = nav.classList.contains('active') ? 'block' : 'none'; btn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; }
+  btn.addEventListener('click', toggle);
+  overlay.addEventListener('click', toggle);
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if(window.innerWidth<=768) toggle(); }));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

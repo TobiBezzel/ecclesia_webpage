@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy – Ecclesia Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C8A96E; --gold-light: #E0C898; --gold-dark: #9E7A42;
+      --bg: #0D0B09; --bg-card: #141210; --bg-surface: #1C1916;
+      --text: #F2EDE6; --text-muted: #9A8E7F; --text-faint: #5C5247;
+      --border: #2A2520; --border-gold: rgba(200,169,110,0.25); --mint: #3DCCAB;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 1.2rem 0; background: rgba(13,11,9,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo-mark { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .logo-icon { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; }
+    .logo-icon i { color: #0D0B09; font-size: 0.9rem; }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); font-weight: 700; }
+    .nav-links { display: flex; list-style: none; gap: 2rem; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta { padding: 0.55rem 1.3rem; background: var(--gold); color: #0D0B09; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+    .mobile-menu { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
+    .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 98; }
+
+    .page-header { padding: 140px 2rem 60px; background: var(--bg-card); border-bottom: 1px solid var(--border); text-align: center; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 50% 0%, rgba(200,169,110,0.05) 0%, transparent 70%); }
+    .page-header-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 2; }
+    .page-eyebrow { display: inline-block; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; font-weight: 600; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 0.8rem; }
+    .page-meta { color: var(--text-muted); font-size: 0.87rem; }
+
+    .content { max-width: 800px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    .section-block { margin-bottom: 1.5rem; }
+    .section-block:last-child { margin-bottom: 0; }
+
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem;
+    }
+    .card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .card-num {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; color: var(--gold); flex-shrink: 0;
+    }
+    .card-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .card-icon i { color: var(--gold); font-size: 0.9rem; }
+    .card-title { font-size: 1rem; font-weight: 600; }
+    .card-text { color: var(--text-muted); font-size: 0.92rem; line-height: 1.8; }
+    .card-text + .card-text { margin-top: 0.8rem; }
+
+    .info-box {
+      background: rgba(200,169,110,0.05); border: 1px solid var(--border-gold);
+      border-radius: 12px; padding: 1.2rem 1.4rem; margin: 1rem 0;
+    }
+    .info-box strong { color: var(--gold); display: block; margin-bottom: 0.3rem; font-size: 0.87rem; }
+    .info-box p { color: var(--text-muted); font-size: 0.87rem; line-height: 1.7; }
+
+    ul.privacy-list { color: var(--text-muted); font-size: 0.92rem; line-height: 1.8; padding-left: 1.2rem; margin: 0.6rem 0; }
+    ul.privacy-list li { margin-bottom: 0.4rem; }
+    ul.privacy-list li strong { color: var(--text); }
+
+    .sub-title { font-size: 0.95rem; font-weight: 600; color: var(--text); margin: 1.2rem 0 0.5rem; }
+
+    a.contact-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold);
+      color: var(--gold); padding: 0.65rem 1.2rem; border-radius: 8px;
+      font-size: 0.87rem; font-weight: 600; text-decoration: none;
+      transition: all 0.2s; margin-top: 0.8rem;
+    }
+    a.contact-btn:hover { background: rgba(200,169,110,0.2); }
+
+    footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 2.5rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { color: var(--text-faint); font-size: 0.82rem; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); font-size: 0.82rem; text-decoration: none; }
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-card); flex-direction: column; padding: 6rem 2rem 2rem; z-index: 99; gap: 0; }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-bottom: 1px solid var(--border); }
+      .nav-links a { display: block; padding: 1rem 0; font-size: 1.1rem; }
+      .mobile-menu { display: block; z-index: 100; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo-mark">
+      <div class="logo-icon"><i class="fas fa-cross"></i></div>
+      <span class="logo-text">Ecclesia</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="privacy.html" class="active">Privacy</a></li>
+      <li><a href="legal.html">Legal Notice</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <a href="mailto:ecclesia@proton.me" class="nav-cta">Get Early Access</a>
+    <button class="mobile-menu" id="mobileMenu"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <span class="page-eyebrow"><i class="fas fa-shield-alt"></i> &nbsp;Data Protection</span>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-meta">Last updated: January 2026</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- 1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">1</div>
+      <div class="card-title">Controller</div>
+    </div>
+    <p class="card-text">The party responsible for data processing in accordance with the General Data Protection Regulation (GDPR) is:</p>
+    <div class="info-box">
+      <strong>Tobias Weihing</strong>
+      <p>Im Fallenbrunnen 19<br>88045 Friedrichshafen, Germany<br><br>
+      Email: <a href="mailto:ecclesia@proton.me" style="color:var(--gold);">ecclesia@proton.me</a></p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">2</div>
+      <div class="card-title">General Information on Data Processing</div>
+    </div>
+    <p class="card-text">Protecting your personal data is important to us. We process your data exclusively based on the legal provisions of the GDPR and the German Telemedia Act (TMG). This privacy policy informs you about the most important aspects of data processing within our app and on this website.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">3</div>
+      <div class="card-title">Legal Basis for Processing</div>
+    </div>
+    <p class="card-text">We process your personal data based on the following legal bases:</p>
+    <ul class="privacy-list">
+      <li><strong>Art. 6 (1) b GDPR</strong> – Contract performance: Providing and using app functions</li>
+      <li><strong>Art. 6 (1) a GDPR</strong> – Consent: Where you have explicitly given consent</li>
+      <li><strong>Art. 6 (1) f GDPR</strong> – Legitimate interests: App improvement, troubleshooting, and security</li>
+    </ul>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">4</div>
+      <div class="card-title">Data We Collect</div>
+    </div>
+    <div class="sub-title">4.1 Account &amp; Profile Data</div>
+    <ul class="privacy-list">
+      <li>Email address (for authentication)</li>
+      <li>Username (chosen by you)</li>
+      <li>Optional profile information: display name, bio, city, church, phone number</li>
+      <li>Profile picture (if uploaded by you)</li>
+    </ul>
+    <div class="sub-title">4.2 App Content Data</div>
+    <ul class="privacy-list">
+      <li>Sermon notes and documents you create</li>
+      <li>Prayer requests and their status</li>
+      <li>Weekly challenges and progress</li>
+      <li>One-step commitments</li>
+      <li>App settings and preferences (e.g. notification times, theme)</li>
+    </ul>
+    <div class="sub-title">4.3 Technical &amp; Usage Data</div>
+    <ul class="privacy-list">
+      <li>App usage patterns and features used (anonymized analytics)</li>
+      <li>Performance and crash reports</li>
+      <li>Device type, operating system version, and app version</li>
+    </ul>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">5</div>
+      <div class="card-title">Purpose of Data Processing</div>
+    </div>
+    <ul class="privacy-list">
+      <li>Providing and maintaining Ecclesia Companion services</li>
+      <li>User authentication and account management</li>
+      <li>Syncing your data across devices (via Firebase)</li>
+      <li>Sending notification reminders you have scheduled</li>
+      <li>Improving app functionality and user experience</li>
+      <li>Ensuring security and preventing misuse</li>
+    </ul>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">6</div>
+      <div class="card-title">Data Storage &amp; Security</div>
+    </div>
+    <div class="sub-title">6.1 Cloud Storage (Firebase)</div>
+    <p class="card-text">Your data — including notes, prayers, and challenges — is stored in Google Firebase (Firestore), which is operated by Google LLC. Firebase complies with GDPR and uses EU Standard Contractual Clauses where applicable. Your authentication is handled by Firebase Authentication.</p>
+    <div class="sub-title">6.2 Local Storage</div>
+    <p class="card-text" style="margin-top:0.3rem;">In addition to cloud storage, certain data is cached locally on your device for offline access and performance. This includes your notes, settings, and preferences.</p>
+    <div class="sub-title">6.3 Storage Duration</div>
+    <ul class="privacy-list">
+      <li><strong>User account data:</strong> Until your account is deleted</li>
+      <li><strong>Technical logs:</strong> Up to 90 days</li>
+      <li><strong>Support requests:</strong> 3 years after completion</li>
+    </ul>
+    <div class="sub-title">6.4 Security Measures</div>
+    <p class="card-text" style="margin-top:0.3rem;">We apply appropriate technical and organizational measures to protect your data from loss, unauthorized access, and misuse. Data transmission is encrypted via HTTPS/TLS.</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">7</div>
+      <div class="card-title">Disclosure of Data to Third Parties</div>
+    </div>
+    <p class="card-text">We do not sell, trade, or rent your personal data to third parties. Data may be shared only in the following limited cases:</p>
+    <ul class="privacy-list">
+      <li>With your explicit prior consent</li>
+      <li>To comply with legal obligations or court orders</li>
+      <li>To Google Firebase (as our cloud infrastructure provider), under a data processing agreement</li>
+      <li>To protect the rights and security of the developer and users</li>
+      <li>In the event of a business transfer (e.g. merger), you will be notified in advance</li>
+    </ul>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">8</div>
+      <div class="card-title">Third-Party Services</div>
+    </div>
+    <p class="card-text">Ecclesia Companion uses the following third-party services:</p>
+    <ul class="privacy-list">
+      <li><strong>Firebase Authentication (Google LLC)</strong> – Secure login via email/password or Google Sign-In</li>
+      <li><strong>Cloud Firestore (Google LLC)</strong> – Secure cloud storage for your app data</li>
+      <li><strong>Expo Notifications</strong> – Local push notification scheduling (no data sent to third parties)</li>
+    </ul>
+    <p class="card-text" style="margin-top:0.8rem;">Google's privacy policy applies to Firebase services: <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--gold);">policies.google.com/privacy</a></p>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">9</div>
+      <div class="card-title">Your Rights (Art. 15–22 GDPR)</div>
+    </div>
+    <p class="card-text">Under the GDPR, you have the following rights regarding your personal data:</p>
+    <ul class="privacy-list">
+      <li><strong>Right of access (Art. 15):</strong> Request information about your stored data</li>
+      <li><strong>Right to rectification (Art. 16):</strong> Correct inaccurate personal data</li>
+      <li><strong>Right to erasure (Art. 17):</strong> Request deletion of your data ("Right to be forgotten"). You can delete your account directly in the app under Settings → Delete Account.</li>
+      <li><strong>Right to restriction (Art. 18):</strong> Restrict processing of your data</li>
+      <li><strong>Right to data portability (Art. 20):</strong> Receive your data in a machine-readable format</li>
+      <li><strong>Right to object (Art. 21):</strong> Object to data processing based on legitimate interests</li>
+      <li><strong>Right to withdraw consent (Art. 7 (3)):</strong> Withdraw any consent given at any time</li>
+    </ul>
+    <p class="card-text" style="margin-top:0.8rem;">To exercise any of these rights, please contact: <strong>ecclesia@proton.me</strong></p>
+    <a href="mailto:ecclesia@proton.me" class="contact-btn"><i class="fas fa-envelope"></i> ecclesia@proton.me</a>
+  </div>
+
+  <!-- 10 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">10</div>
+      <div class="card-title">Right to Lodge a Complaint</div>
+    </div>
+    <p class="card-text">You have the right to lodge a complaint with a supervisory authority about our processing of your personal data.</p>
+    <div class="info-box">
+      <strong>Supervisory Authority in Germany:</strong>
+      <p>The State Commissioner for Data Protection of Baden-Württemberg<br>
+      or the Federal Commissioner for Data Protection and Freedom of Information (BfDI)<br>
+      Website: <a href="https://www.bfdi.bund.de" target="_blank" style="color:var(--gold);">www.bfdi.bund.de</a></p>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">11</div>
+      <div class="card-title">Automated Decision-Making / Profiling</div>
+    </div>
+    <p class="card-text">We <strong>do not</strong> use automated decision-making or profiling within the meaning of Art. 22 GDPR. No decisions with legal effect are made solely by automated means.</p>
+  </div>
+
+  <!-- 12 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">12</div>
+      <div class="card-title">Transfers to Third Countries</div>
+    </div>
+    <p class="card-text">Firebase services operated by Google LLC may involve data transfers to the United States. These transfers are governed by EU Standard Contractual Clauses (SCCs) as per Art. 46 GDPR. We ensure that adequate safeguards are in place for all such transfers.</p>
+  </div>
+
+  <!-- 13 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">13</div>
+      <div class="card-title">Privacy for Children</div>
+    </div>
+    <p class="card-text">Ecclesia Companion is not intended for children under the age of 16. We do not knowingly collect personal data from children under 16 years of age. If you discover that a child under 16 has provided us with personal data, please contact us immediately at <a href="mailto:ecclesia@proton.me" style="color:var(--gold);">ecclesia@proton.me</a>.</p>
+  </div>
+
+  <!-- 14 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">14</div>
+      <div class="card-title">Changes to This Policy</div>
+    </div>
+    <p class="card-text">We reserve the right to amend this privacy policy from time to time to reflect changes in law or our services. Significant changes will be communicated by:</p>
+    <ul class="privacy-list">
+      <li>Publishing an updated policy in the app</li>
+      <li>Sending an in-app notification</li>
+      <li>Updating the "Last updated" date at the top of this page</li>
+    </ul>
+    <p class="card-text" style="margin-top:0.8rem;">Your continued use of the app after changes constitutes acceptance of the revised policy.</p>
+  </div>
+
+  <!-- 15 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num">15</div>
+      <div class="card-title">Contact</div>
+    </div>
+    <p class="card-text">For any questions about this privacy policy or to exercise your rights, please contact us:</p>
+    <a href="mailto:ecclesia@proton.me" class="contact-btn"><i class="fas fa-envelope"></i> ecclesia@proton.me</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2025 Tobias Weihing. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="legal.html">Legal Notice</a>
+      <a href="support.html">Support</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('mobileMenu');
+  const nav = document.getElementById('navLinks');
+  const overlay = document.getElementById('navOverlay');
+  function toggle() { nav.classList.toggle('active'); overlay.style.display = nav.classList.contains('active') ? 'block' : 'none'; btn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; }
+  btn.addEventListener('click', toggle);
+  overlay.addEventListener('click', toggle);
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if(window.innerWidth<=768) toggle(); }));
+</script>
+</body>
+</html>

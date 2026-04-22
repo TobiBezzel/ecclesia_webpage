@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – Ecclesia Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #C8A96E; --gold-light: #E0C898; --gold-dark: #9E7A42;
+      --bg: #0D0B09; --bg-card: #141210; --bg-surface: #1C1916;
+      --text: #F2EDE6; --text-muted: #9A8E7F; --text-faint: #5C5247;
+      --border: #2A2520; --border-gold: rgba(200,169,110,0.25); --mint: #3DCCAB;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1.2rem 0; background: rgba(13,11,9,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo-mark { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .logo-icon { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; }
+    .logo-icon i { color: #0D0B09; font-size: 0.9rem; }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); font-weight: 700; }
+    .nav-links { display: flex; list-style: none; gap: 2rem; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta { padding: 0.55rem 1.3rem; background: var(--gold); color: #0D0B09; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+    .mobile-menu { display: none; background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
+    .nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 98; }
+
+    .page-header {
+      padding: 140px 2rem 80px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 0%, rgba(200,169,110,0.06) 0%, transparent 70%);
+    }
+    .page-header-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
+    .page-eyebrow { display: inline-block; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; font-weight: 600; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 900; margin-bottom: 1rem; }
+    .page-desc { color: var(--text-muted); font-size: 1.05rem; line-height: 1.75; }
+
+    .app-logo-wrap { margin: 1.5rem auto 0; }
+    .app-logo {
+      width: 110px; height: 110px; border-radius: 28px;
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .app-logo i { color: var(--gold); font-size: 2.5rem; }
+    .version-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 0.8rem;
+      background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold);
+      padding: 0.3rem 0.8rem; border-radius: 100px;
+      font-size: 0.75rem; color: var(--gold);
+    }
+
+    .content { max-width: 800px; margin: 0 auto; padding: 5rem 2rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem;
+    }
+    .card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .card-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .card-icon i { color: var(--gold); }
+    .card-title { font-size: 1.05rem; font-weight: 600; }
+    .card-text { color: var(--text-muted); font-size: 0.93rem; line-height: 1.75; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .feat-item {
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.2rem; display: flex; align-items: flex-start; gap: 0.9rem;
+    }
+    .feat-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feat-icon i { color: var(--gold); font-size: 0.85rem; }
+    .feat-icon.mint { background: rgba(61,204,171,0.1); border-color: rgba(61,204,171,0.25); }
+    .feat-icon.mint i { color: var(--mint); }
+    .feat-text h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .feat-text p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+    .dev-card {
+      background: linear-gradient(135deg, rgba(200,169,110,0.08) 0%, rgba(200,169,110,0.03) 100%);
+      border: 1px solid var(--border-gold); border-radius: 20px; padding: 2.5rem; text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .dev-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem; font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700; color: #0D0B09;
+    }
+    .dev-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .dev-role { color: var(--text-muted); font-size: 0.87rem; margin-bottom: 1.5rem; }
+    .dev-links { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+    .dev-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(200,169,110,0.1); border: 1px solid var(--border-gold);
+      color: var(--gold); padding: 0.55rem 1.1rem; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .dev-link:hover { background: rgba(200,169,110,0.2); }
+    .dev-location { color: var(--text-muted); font-size: 0.87rem; margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+
+    footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 2.5rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { color: var(--text-faint); font-size: 0.82rem; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); font-size: 0.82rem; text-decoration: none; }
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-card); flex-direction: column; padding: 6rem 2rem 2rem; z-index: 99; gap: 0; }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-bottom: 1px solid var(--border); }
+      .nav-links a { display: block; padding: 1rem 0; font-size: 1.1rem; }
+      .mobile-menu { display: block; z-index: 100; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo-mark">
+      <div class="logo-icon"><i class="fas fa-cross"></i></div>
+      <span class="logo-text">Ecclesia</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="legal.html">Legal Notice</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+    <a href="mailto:ecclesia@proton.me" class="nav-cta">Get Early Access</a>
+    <button class="mobile-menu" id="mobileMenu"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="app-logo-wrap">
+      <div class="app-logo"><i class="fas fa-cross"></i></div>
+      <div class="version-badge"><i class="fas fa-tag"></i> Version 1.0.0</div>
+    </div>
+    <br>
+    <span class="page-eyebrow">About the App</span>
+    <h1 class="page-title">Ecclesia Companion</h1>
+    <p class="page-desc">Your smart service companion — built for those who want to do more than just listen.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+      <div class="card-title">About the App</div>
+    </div>
+    <p class="card-text">
+      Ecclesia Companion is a purpose-built mobile app for people who want to engage deeply with Sunday services, sermons, and their personal faith journey. Whether you're a seasoned churchgoer or just beginning to explore, Ecclesia helps you capture thoughts during the message, pray consistently throughout the week, take on personal challenges, and carry every Sunday's insight into your daily life.
+    </p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fas fa-pen-nib"></i></div>
+      <div class="feat-text">
+        <h4>Smart Note Editor</h4>
+        <p>Free-form or guided capture with structured anchors.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fas fa-heart"></i></div>
+      <div class="feat-text">
+        <h4>Prayer Journal</h4>
+        <p>Track requests, set reminders, enter Pray Mode.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon mint"><i class="fas fa-sparkles"></i></div>
+      <div class="feat-text">
+        <h4>Weekly Challenges</h4>
+        <p>One concrete commitment per week, tracked daily.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon mint"><i class="fas fa-book-open"></i></div>
+      <div class="feat-text">
+        <h4>Note Library</h4>
+        <p>Search, filter by tag, folder, or date.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fas fa-cloud"></i></div>
+      <div class="feat-text">
+        <h4>Cloud Sync</h4>
+        <p>Access your data from any device, securely.</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="feat-text">
+        <h4>Privacy First</h4>
+        <p>Your data stays yours. No ads, no selling data.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dev-card">
+    <div class="dev-avatar">TW</div>
+    <div class="dev-name">Tobias Weihing</div>
+    <div class="dev-role">Developer &amp; Designer · Ecclesia Companion</div>
+    <div class="dev-links">
+      <a href="mailto:ecclesia@proton.me" class="dev-link">
+        <i class="fas fa-envelope"></i> ecclesia@proton.me
+      </a>
+    </div>
+    <div class="dev-location"><i class="fas fa-map-marker-alt"></i> Friedrichshafen, Germany</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon"><i class="fas fa-envelope"></i></div>
+      <div class="card-title">Get in Touch</div>
+    </div>
+    <p class="card-text" style="margin-bottom:1rem;">
+      Have a question, suggestion, or want to become a beta tester? We'd love to hear from you.
+    </p>
+    <a href="mailto:ecclesia@proton.me" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(200,169,110,0.1);border:1px solid var(--border-gold);color:var(--gold);padding:0.6rem 1.2rem;border-radius:8px;font-size:0.9rem;font-weight:600;text-decoration:none;">
+      <i class="fas fa-envelope"></i> ecclesia@proton.me
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2025 Tobias Weihing. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="legal.html">Legal Notice</a>
+      <a href="support.html">Support</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('mobileMenu');
+  const nav = document.getElementById('navLinks');
+  const overlay = document.getElementById('navOverlay');
+  function toggle() { nav.classList.toggle('active'); overlay.style.display = nav.classList.contains('active') ? 'block' : 'none'; btn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; }
+  btn.addEventListener('click', toggle);
+  overlay.addEventListener('click', toggle);
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if(window.innerWidth<=768) toggle(); }));
+</script>
+</body>
+</html>
